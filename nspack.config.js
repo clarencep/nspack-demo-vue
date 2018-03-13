@@ -5,7 +5,8 @@ const defaultBaseEntry = {
     js: require('./src/template/base.script'),
     css: require('./src/template/base.style'),
     html: require('./src/template/base.html'),
-    extractCssFromJs: false,
+    extractCssFromJs: true,
+    ignoreMissingCss: true,
 }
 
 module.exports = {
@@ -15,9 +16,10 @@ module.exports = {
             js: 'home.js',
             css: 'home.css',
             html: 'home.html.js', // Note: this file will run during build.
-            extractCssFromJs: true,
+            extractCssFromJs: false,
         },
         about: defaultBaseEntry,
+        'tests/es6-classes': defaultBaseEntry,
     },
     outputBase: path.join(__dirname, 'dist'),
     output: {
