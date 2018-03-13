@@ -2,7 +2,7 @@ const path = require('path')
 const {html, raw} = require('es6-string-html-template')
 
 module.exports = function({entry, bundle}){
-    const meta = require(path.join(entry.baseDir, entry.name + '.meta.json'))
+    const meta = tryRequire(path.join(entry.baseDir, entry.name + '.meta.json')) || {}
     const title = meta.title || 'NSPack Demo For Vue'
     return html`<!doctype html>
 <html>
@@ -17,3 +17,10 @@ module.exports = function({entry, bundle}){
 </body>
 </html>`
 }
+
+function tryRequire(filepath){
+    try {
+        return require(filepath)
+    } catch (e){}
+}
+

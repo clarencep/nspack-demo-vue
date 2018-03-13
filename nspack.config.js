@@ -2,10 +2,10 @@ const fs = require('fs')
 const path = require('path')
 
 const defaultBaseEntry = {
-    script: require('./src/template/base.script'),
+    js: require('./src/template/base.script'),
+    css: require('./src/template/base.style'),
     html: require('./src/template/base.html'),
-    meta: require('./src/template/meta'),
-    extractCssFromJs: true,
+    extractCssFromJs: false,
 }
 
 module.exports = {
@@ -13,21 +13,23 @@ module.exports = {
     entry: {
         home: {
             js: 'home.js',
+            css: 'home.css',
             html: 'home.html.js', // Note: this file will run during build.
-            cssExtractFromJs: true,
+            extractCssFromJs: true,
         },
         about: defaultBaseEntry,
     },
     outputBase: path.join(__dirname, 'dist'),
     output: {
         '*': {
-            js: '[name]_[hash].js',
-            css: '[name]_[hash].css',
+            js: '[name].js',
+            css: '[name].css',
             html: '[name].html',
         },
     },
     externals: {
         vue: 'window.Vue',
-    }
+    },
+    debugLevel: 2,
 }
 
