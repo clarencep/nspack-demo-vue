@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const glob = require('glob')
 
 const defaultBaseEntry = {
     js: require('./src/template/base.script'),
@@ -9,8 +10,10 @@ const defaultBaseEntry = {
     ignoreMissingCss: true,
 }
 
+const PROJECT_SRC_DIR = path.join(__dirname, 'src')
+
 module.exports = {
-    entryBase: path.join(__dirname, 'src'), // '@' is equal to entryBase
+    entryBase: PROJECT_SRC_DIR, // '@' is equal to entryBase
     entry: {
         home: {
             js: 'home.js',
@@ -19,7 +22,7 @@ module.exports = {
             extractCssFromJs: false,
         },
         about: defaultBaseEntry,
-        'tests/es6-classes': defaultBaseEntry,
+        ...getTestsPagesEntries(defaultBaseEntry),
     },
     outputBase: path.join(__dirname, 'dist'),
     output: {
@@ -28,9 +31,25 @@ module.exports = {
             css: '[name].css',
             html: '[name].html',
         },
+        home: {
+            html: 'index.html',
+        }
     },
     externals: {
         vue: 'window.Vue',
     },
+}
+
+function getTestsPagesEntries(entryConfig){
+    const testsDir = path.join(PROJECT_SRC_DIR, 'tests')
+    const r = {}
+
+    glob.sync(testsDir + '/**/*.vue').forEach(file => {
+        if (!/\/_/.test(file)){
+            r[path.relative(PROJECT_SRC_DIR, file).replace(/\.vue$/, '')] = entryConfig
+        }
+    })
+
+    return r
 }
 

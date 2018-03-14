@@ -14,5 +14,6 @@ process.on('unhandledRejection', function (err) {
 
 const nspack = require('nspack')
 nspack(require('./nspack.config'))
+    .then(res => console.log(res.summary()))
 
 

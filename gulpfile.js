@@ -23,6 +23,7 @@ gulp.task('default', function(done){
 
 gulp.task('build', function(){
     return nspack(require('./nspack.config'))
+            .then(res => console.log(res.summary()))
 })
 
 

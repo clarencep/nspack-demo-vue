@@ -2,7 +2,8 @@
     <div>
         This is a test for ES6 class.
         If the class is successfully built, you will see the instance dump info below:
-        <pre><code>{{instance}}</code></pre>
+        <pre><code>{{ instance }}</code></pre>
+        
     </div>
 </template>
 <script>
