@@ -32,6 +32,5 @@ module.exports = {
     externals: {
         vue: 'window.Vue',
     },
-    debugLevel: 2,
 }
 
