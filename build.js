@@ -21,6 +21,9 @@ const config = require('./nspack.config')
 
 debug("begin nspack...")
 nspack(config)
-    .then(res => console.log(res.summary()))
+    .then(res => {
+        debug("done nspack.")
+        console.log(res.summary())
+    })
 
 
