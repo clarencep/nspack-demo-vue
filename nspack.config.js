@@ -9,6 +9,9 @@ const defaultBaseEntry = {
     html: require('./src/template/base.html'),
     extractCssFromJs: true,
     ignoreMissingCss: true,
+    // libName: '', // default is this entry's name (in which all backslashes ('\') will be replaced by slash ('/') )
+    // libTarget: 'umd', // default is no libTarget (just execute the module in an IIFE)
+    // amdExecOnDef: true, // default is true 
 }
 
 const PROJECT_SRC_DIR = path.join(__dirname, 'src')
@@ -23,13 +26,14 @@ module.exports = {
             extractCssFromJs: false,
         },
         about: defaultBaseEntry,
-        ...getTestsPagesEntries(defaultBaseEntry),
+        ...testsPagesEntries(),
+        ...componentsAsUmdModules()
     },
-    outputBase: path.join(__dirname, 'dist'),
+    outputBase: path.join(__dirname, 'public'),
     output: {
         '*': {
-            js: '[name].js',
-            css: '[name].css',
+            js: 'dist/[name].js',
+            css: 'dist/[name].css',
             html: '[name].html',
         },
         home: {
@@ -40,20 +44,56 @@ module.exports = {
         vue: 'window.Vue',
     },
     hooks: {
-        outputFile: nspack.hooks.OutputUglifier,
+        // hooks are something accepts inputs and 
+        // outputFile: nspack.hooks.OutputUglifier,
     }
 }
 
-function getTestsPagesEntries(entryConfig){
+// ignore files or directories begin with underscore('_')
+function shouldIgnoreFile(file){
+    return /\/_/.test(file)
+}
+
+function testsPagesEntries(){
     const testsDir = path.join(PROJECT_SRC_DIR, 'tests')
     const r = {}
 
     glob.sync(testsDir + '/**/*.vue').forEach(file => {
-        if (!/\/_/.test(file)){
-            r[path.relative(PROJECT_SRC_DIR, file).replace(/\.vue$/, '')] = entryConfig
+        if (!shouldIgnoreFile(file)){
+            r[fileToModuleEntryName(file)] = defaultBaseEntry
         }
     })
 
     return r
 }
 
+// let's pack every components as AMD module
+function componentsAsUmdModules(){
+    const componentsDir = path.join(PROJECT_SRC_DIR, 'components')
+    const r = {}
+
+    glob.sync(componentsDir + '/**/*.vue').forEach(file => {
+        if (!shouldIgnoreFile(file)){
+            r[fileToModuleEntryName(file)] = {
+                ...defaultBaseEntry, 
+
+                // the component will be packed into AMD module
+                libTarget: 'amd',
+
+                // the js template
+                js: require('./src/template/component.script'),
+
+                // components has no html and css, all will be packed into a .js file
+                html: false,
+                css: false,
+                extractCssFromJs: false,
+            }
+        }
+    })
+
+    return r
+}
+
+function fileToModuleEntryName(file){
+    return path.relative(PROJECT_SRC_DIR, file).replace(/\.vue$/, '').replace(/\\/g, '/')
+}

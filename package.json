@@ -21,7 +21,9 @@
   "name": "nspack-demo-vue",
   "version": "1.0.0",
   "main": "nspack.config.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "regenerator-runtime": "^0.11.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "gulp"
