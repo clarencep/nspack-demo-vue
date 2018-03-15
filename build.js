@@ -11,9 +11,16 @@ process.on('unhandledRejection', function (err) {
     process.exit(3); // 早死早超生
 });
 
+const debug = require('debug')('demo')
 
+debug("loading nspack...")
 const nspack = require('nspack')
-nspack(require('./nspack.config'))
+
+debug("loading config...")
+const config = require('./nspack.config')
+
+debug("begin nspack...")
+nspack(config)
     .then(res => console.log(res.summary()))
 
 
