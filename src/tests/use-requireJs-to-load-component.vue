@@ -9,13 +9,13 @@
                 register the component globally.
             </label>
         </p>
-        <div v-if="helloLoading">
+        <template v-if="helloLoading">
             <p>Hello is loading...</p>
-        </div>
-        <div v-if="helloLoaded">
+        </template>
+        <template v-if="helloLoaded">
             <p>Hello loaded. It should be here:</p>
             <Hello></Hello>
-        </div>
+        </template>
         <div class="error" v-if="error">Error: {{error}}</div>
     </div>
 </template>
