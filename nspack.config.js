@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const glob = require('glob')
+const nspack = require('nspack')
 
 const defaultBaseEntry = {
     js: require('./src/template/base.script'),
@@ -38,6 +39,9 @@ module.exports = {
     externals: {
         vue: 'window.Vue',
     },
+    hooks: {
+        outputFile: nspack.hooks.OutputUglifier,
+    }
 }
 
 function getTestsPagesEntries(entryConfig){

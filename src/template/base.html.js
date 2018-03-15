@@ -4,7 +4,7 @@ const {html, raw} = require('es6-string-html-template')
 module.exports = function({entry, bundle}){
     const meta = tryRequire(path.join(entry.baseDir, entry.name + '.meta.json')) || {}
     const title = meta.title || 'NSPack Demo For Vue'
-    return html`<!doctype html>
+    return '' + html`<!doctype html>
 <html>
 <head>
     <title>${title}</title>
