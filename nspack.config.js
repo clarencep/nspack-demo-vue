@@ -44,8 +44,10 @@ module.exports = {
         vue: 'window.Vue',
     },
     hooks: {
-        // hooks are something accepts inputs and 
-        // outputFile: nspack.hooks.OutputUglifier,
+        // hooks are something accepts inputs, processes inputs and can stop the normal packing process by returning false.
+        // a hook must provide a apply() method, like a function.
+        // the simplest hook is just a function.
+        outputFile: nspack.hooks.OutputUglifier,
     }
 }
 
