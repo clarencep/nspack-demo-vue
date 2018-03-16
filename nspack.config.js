@@ -48,7 +48,8 @@ module.exports = {
         // a hook must provide a apply() method, like a function.
         // the simplest hook is just a function.
         outputFile: nspack.hooks.OutputUglifier,
-    }
+    },
+    watchInterval: 500, //ms
 }
 
 // ignore files or directories begin with underscore('_')
