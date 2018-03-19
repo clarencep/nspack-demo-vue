@@ -12,6 +12,7 @@ process.on('unhandledRejection', function (err) {
 });
 
 const debug = require('debug')('demo')
+const path = require('path')
 
 debug("loading nspack...")
 const nspack = require('nspack')
