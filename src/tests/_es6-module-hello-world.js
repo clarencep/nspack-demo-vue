@@ -3,6 +3,6 @@ export function hello(){
 }
 
 export default function hi(){
-    return "Hi world!"
+    return "Hi world! aaa"
 }
 

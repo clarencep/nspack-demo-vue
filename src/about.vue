@@ -10,7 +10,9 @@
     export default {
         components: {},
         data(){
-            return {}
+            return {
+                
+            }
         },
     }
 </script>

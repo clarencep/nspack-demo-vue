@@ -14,7 +14,7 @@
             }
         },
         mounted(){
-            this.instance = new DemoClass("Hello world!")
+            this.instance = new DemoClass("Hi world! ccc")
         }
     }
 

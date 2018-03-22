@@ -25,9 +25,10 @@ new nspack(config)
         // doneCallback: async? (err:Error, res:NSPackBuiltResult) => void
         (err, res) => {
             if (err){
-                debug("nspack finished with error:", res)
+                debug("nspack finished with error:", err)
                 return
             }
+
             debug("done nspack.")
             console.log(res.summary())
         },

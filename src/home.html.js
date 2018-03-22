@@ -20,3 +20,4 @@ async function getDataScript(){
     return `<script>var APP_DATA = ${JSON.stringify(data)}</script>`
 }
 
+
