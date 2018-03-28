@@ -11,6 +11,7 @@
     "babel-preset-stage-2": "^6.24.1",
     "cb2p": "^1.1.1",
     "es6-string-html-template": "^1.0.2",
+    "express": "^4.16.3",
     "glob": "^7.1.2",
     "gulp": "^3.9.1",
     "gulp-cli": "^2.0.1",
