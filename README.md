@@ -1,7 +1,7 @@
 About This Project
 ===================
 
-This project is a demo for nspack.
+This project is a demo for [nspack](https://github.com/clarencep/nspack).
 
 Run this demo
 =============
