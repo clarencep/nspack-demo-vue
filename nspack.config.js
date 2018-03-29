@@ -17,8 +17,10 @@ const defaultBaseEntry = {
 const PROJECT_SRC_DIR = path.join(__dirname, 'src')
 
 module.exports = {
+    // specify
     entryBase: PROJECT_SRC_DIR, // '@' is equal to entryBase
     entry: {
+        // <name> => <entry-info>
         home: {
             js: 'home.js',
             css: 'home.css',
@@ -29,26 +31,51 @@ module.exports = {
         ...testsPagesEntries(),
         ...componentsAsUmdModules()
     },
+
+    // specify the output files base directory
     outputBase: path.join(__dirname, 'public'),
+
+    // specify the output file pathes and names
     output: {
+        // <entry-name> => <entry-output-info>
+        // - <entry-name>: the name of the entry, should be the same with previous config.entry configuration.
+        home: {
+            // <format> => <output-file-path-name>
+            // - <format>: js/css/html
+            // - <output-file-path-name>: the output file path and name, base from config.outputBase 
+            html: 'index.html',
+        },
+        // '*' is a special case -- it means all or default output config.
         '*': {
+            // you can use `[name]` and `[hash]` placeholder for the entry name and the file's md5 hash
+            // js: 'dist/[name].[hash].js',
+            // css: 'dist/[name].[hash].css',
+
             js: 'dist/[name].js',
             css: 'dist/[name].css',
             html: '[name].html',
         },
-        home: {
-            html: 'index.html',
-        }
     },
+
+    // the hash length for `[hash]` in output file name, default is `6`
+    hashLength: 6, 
+
+    // specify the external modules
     externals: {
+        // <module-name> => <module-definition>
+        // - <module-name>: can be used in require() or import 
+        // - <module-definition>: a js expression, whose value is the module.
         vue: 'window.Vue',
     },
+
+    // hooks are something accepts inputs, processes inputs and can stop the normal packing process by returning false.
+    // a hook must provide a apply() method, like a function.
+    // the simplest hook is just a function.
     hooks: {
-        // hooks are something accepts inputs, processes inputs and can stop the normal packing process by returning false.
-        // a hook must provide a apply() method, like a function.
-        // the simplest hook is just a function.
         outputFile: nspack.hooks.OutputUglifier,
     },
+
+    // specify the interval in ms for checking filesystem changes in watching process.
     watchInterval: 500, //ms
 }
 
