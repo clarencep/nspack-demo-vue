@@ -57,6 +57,13 @@ module.exports = {
         },
     },
 
+    // the output hash manifests:
+    outputHashManifests: {
+        json: 'dist/manifests.json', // specify the manifests JSON file
+        jsonp: 'dist/manifests.js',  // specify the manifests JSONP file
+        jsonpCallback: 'nspackManifestsJsonpCallback', // the callback function name for JSONP
+    },
+
     // the hash length for `[hash]` in output file name, default is `6`
     hashLength: 6, 
 
@@ -72,7 +79,17 @@ module.exports = {
     // a hook must provide a apply() method, like a function.
     // the simplest hook is just a function.
     hooks: {
+        // use the default uglifier to compress output file
         outputFile: nspack.hooks.OutputUglifier,
+
+        // We only need the manifests for components
+        buildManifests: (manifests) => {
+            for (let moduleName of Object.keys(manifests)){
+                if (!/^components\/.*\.js$/.test(moduleName)){
+                    delete manifests[moduleName]
+                }
+            }
+        },
     },
 
     // specify the interval in ms for checking filesystem changes in watching process.
